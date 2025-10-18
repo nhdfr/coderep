@@ -1,8 +1,8 @@
-import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import ogImg from "./og.png";
+      import { Analytics } from "@vercel/analytics/next";
+      import type { Metadata } from "next";
+      import { Geist, Geist_Mono } from "next/font/google";
+      import "./globals.css";
+      import ogImg from "./og.png";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
