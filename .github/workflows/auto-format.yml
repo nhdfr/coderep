@@ -3,32 +3,28 @@ name: Auto Format Code
 on:
   push:
     branches: [main, dev]
-  pull_request_target:
-    branches: [main, dev]
-    types: [opened, synchronize]
+
+permissions:
+  contents: write
 
 jobs:
   format:
     runs-on: ubuntu-latest
-    
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref || github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run Prettier
         run: npx prettier --write .
@@ -38,38 +34,15 @@ jobs:
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Files were formatted"
           else
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No files needed formatting"
           fi
 
-      - name: Commit formatted files
+      - name: Commit and push formatted files
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Auto-format code with Prettier"
-
-      - name: Push changes
-        if: steps.verify-changed-files.outputs.changed == 'true'
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request_target" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
-            echo "Cannot push to fork. Please run 'npx prettier --write .' locally and commit the changes."
-            exit 1
-          else
-            git push
-          fi
-
-      - name: Comment on PR (if from fork)
-        if: steps.verify-changed-files.outputs.changed == 'true' && github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🎨 **Code formatting needed!**\n\nYour code needs to be formatted with Prettier. Please run the following command locally and commit the changes:\n\n```bash\nnpx prettier --write .\n```\n\nThen push the changes to update this PR.'
-            })
+          git commit -m "Format code with Prettier"
+          git push
