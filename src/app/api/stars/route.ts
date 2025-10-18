@@ -1,8 +1,8 @@
-                                     import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-                         type GithubRepoResponse = {
-	                  stargazers_count: number;
-                  };
+type GithubRepoResponse = {
+	stargazers_count: number;
+};
 
 type StarsApiResponse = {
 	stars: number | null;
