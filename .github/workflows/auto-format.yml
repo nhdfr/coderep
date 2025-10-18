@@ -1,4 +1,4 @@
-name: Auto Format Code
+name: Format
 
 on:
   push:
@@ -12,24 +12,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Run Prettier
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Format code with Prettier
         run: npx prettier --write .
 
-      - name: Check for changes
+      - name: Check for formatting changes
         id: verify-changed-files
         run: |
           if [ -n "$(git status --porcelain)" ]; then
@@ -38,11 +47,11 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit and push formatted files
+      - name: Commit and push formatted code
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Format code with Prettier"
+          git commit -m "style: format code with prettier"
           git push
