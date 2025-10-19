@@ -6,25 +6,29 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"collab-server": "node node_modules/y-websocket/bin/server.js --port 1234"
+		"collab-server": "HOST=0.0.0.0 PORT=1234 npx y-websocket-server",
+		"docker:build": "docker build -t ciglider .",
+		"docker:run": "docker run -p 3000:3000 ciglider",
+		"docker:up": "docker-compose up --build",
+		"docker:down": "docker-compose down"
 	},
 	"dependencies": {
 		"@monaco-editor/react": "^4.4.6",
+		"@types/node": "^24.8.1",
+		"@types/react": "^19.2.2",
+		"@types/react-dom": "^19.2.2",
 		"monaco-vim": "^0.4.2",
 		"next": "^15.5.6",
-		"react": "19.1.0",
-		"react-dom": "19.1.0",
-		"y-websocket": "^1.4.5",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"typescript": "^5.9.3",
+		"y-websocket": "^3.0.0",
 		"yjs": "^13.6.0"
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4.1.14",
-		"@types/node": "^20",
-		"@types/react": "^19",
-		"@types/react-dom": "^19",
 		"prettier": "^3.6.2",
-		"prettier-plugin-tailwindcss": "^0.7.1",
-		"typescript": "^5"
+		"prettier-plugin-tailwindcss": "^0.7.1"
 	},
 	"overrides": {
 		"dompurify": "^3.3.0"
