@@ -1,30 +1,32 @@
 {
-  "name": "projecticon",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "collab-server": "node node_modules/y-websocket/bin/server.js --port 1234"
-  },
-  "dependencies": {
-    "@monaco-editor/react": "^4.4.6",
-    "monaco-vim": "^0.4.2",
-    "next": "^15.5.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "y-websocket": "^1.4.5",
-    "yjs": "^13.6.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.14",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "typescript": "^5"
-  },
-  "overrides": {
-    "dompurify": "^3.3.0"
-  }
+	"name": "projecticon",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"collab-server": "node node_modules/y-websocket/bin/server.js --port 1234"
+	},
+	"dependencies": {
+		"@monaco-editor/react": "^4.4.6",
+		"monaco-vim": "^0.4.2",
+		"next": "^15.5.6",
+		"react": "19.1.0",
+		"react-dom": "19.1.0",
+		"y-websocket": "^1.4.5",
+		"yjs": "^13.6.0"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "^4.1.14",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.7.1",
+		"typescript": "^5"
+	},
+	"overrides": {
+		"dompurify": "^3.3.0"
+	}
 }
