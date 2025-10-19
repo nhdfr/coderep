@@ -40,7 +40,9 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 	const vimStatusRef = useRef<HTMLDivElement | null>(null);
 	const vimModeRef = useRef<any>(null);
 	const contentRef = useRef<string>(initialContent);
-	const [connectionStatus, setConnectionStatus] = React.useState<"connecting" | "connected" | "disconnected">("connecting");
+	const [connectionStatus, setConnectionStatus] = React.useState<
+		"connecting" | "connected" | "disconnected"
+	>("connecting");
 
 	const createVimFromModule = (
 		mod: any,
@@ -56,8 +58,7 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 			if (typeof d === "function") return d(editor, statusNode);
 			if (d && typeof d.initVimMode === "function")
 				return d.initVimMode(editor, statusNode);
-		} catch (e) {
-		}
+		} catch (e) {}
 		throw new Error("could not find init function in monaco-vim module");
 	};
 
@@ -65,17 +66,26 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 		const ydoc = new Y.Doc();
 		ydocRef.current = ydoc;
 
-		const protocol = typeof window !== "undefined" && window.location.protocol === "https:" ? "wss:" : "ws:";
+		const protocol =
+			typeof window !== "undefined" && window.location.protocol === "https:"
+				? "wss:"
+				: "ws:";
 		const wsUrl = `${protocol}//${window.location.host}/ws`;
-		
+
 		// console.log("Connecting to WebSocket:", wsUrl);
-		
+
 		const provider = new WebsocketProvider(wsUrl, docId, ydoc);
 		providerRef.current = provider;
 
 		provider.on("status", (event: any) => {
 			console.log("WebSocket status:", event);
-			setConnectionStatus(event.status === "connected" ? "connected" : event.status === "connecting" ? "connecting" : "disconnected");
+			setConnectionStatus(
+				event.status === "connected"
+					? "connected"
+					: event.status === "connecting"
+						? "connecting"
+						: "disconnected",
+			);
 		});
 
 		const saved = localStorage.getItem(`editor-content-${docId}`);
@@ -97,7 +107,10 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 
 		const ytext = ydoc.getText("monaco");
 
-		const currentContent = ytext.toString() || localStorage.getItem(`editor-content-${docId}`) || initialContent;
+		const currentContent =
+			ytext.toString() ||
+			localStorage.getItem(`editor-content-${docId}`) ||
+			initialContent;
 		editor.setValue(currentContent);
 		contentRef.current = currentContent;
 
@@ -163,8 +176,7 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 						editorRef.current,
 						vimStatusRef.current,
 					);
-				} catch (e) {
-				}
+				} catch (e) {}
 			} else {
 				try {
 					if (
@@ -173,8 +185,7 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 					) {
 						vimModeRef.current.dispose();
 					}
-				} catch (e) {
-				}
+				} catch (e) {}
 				vimModeRef.current = null;
 			}
 		},
@@ -213,27 +224,34 @@ const CollabEditor = React.forwardRef(function CollabEditor(
 				) {
 					vimModeRef.current.dispose();
 				}
-			} catch (e) {
-			}
+			} catch (e) {}
 			vimModeRef.current = null;
 		};
 	}, []);
 
 	const getConnectionStatusColor = () => {
 		switch (connectionStatus) {
-			case "connected": return "text-green-400";
-			case "connecting": return "text-yellow-400";
-			case "disconnected": return "text-red-400";
-			default: return "text-zinc-400";
+			case "connected":
+				return "text-green-400";
+			case "connecting":
+				return "text-yellow-400";
+			case "disconnected":
+				return "text-red-400";
+			default:
+				return "text-zinc-400";
 		}
 	};
 
 	const getConnectionStatusText = () => {
 		switch (connectionStatus) {
-			case "connected": return "Live collaboration active";
-			case "connecting": return "Connecting...";
-			case "disconnected": return "Offline mode (localStorage)";
-			default: return "";
+			case "connected":
+				return "Live collaboration active";
+			case "connecting":
+				return "Connecting...";
+			case "disconnected":
+				return "Offline mode (localStorage)";
+			default:
+				return "";
 		}
 	};
 
