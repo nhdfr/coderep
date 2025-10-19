@@ -1,8 +1,6 @@
-import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ogImg from "./og.png";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -15,66 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "AnimateIcons – Modern Animated React Icon Library",
-	description:
-		"Seamless, animated icons for React—make your interface stand out with beautifully smooth motion and easy customization. Built to help you create engaging experiences without the hassle.",
-	keywords: [
-		"Animated Icons",
-		"Animatedicons",
-		"React Icons",
-		"animate icons",
-		"React Motion Icons",
-		"Framer Motion Icons",
-		"React Animation Library",
-		"Motion UI",
-		"Interactive Icons",
-		"Customizable Icons",
-		"React Components",
-		"SVG Animated Icons",
-		"AnimateIcons",
-		"UI Animation Library",
-		"Microinteractions",
-		"Website Icons",
-		"App Icons",
-		"Lottie Alternatives",
-		"Animated SVG",
-		"UI/UX Animated Elements",
-		"Frontend Animation",
-		"JavaScript Animated Icons",
-		"React SVG Animation",
-		"Lightweight Icon Library",
-		"Animated UI Kit",
-	],
+	title: "shit buffer",
+	description: "share your shit code whereever you want",
+	keywords: ["collaboration","yjs","monaco","live edit","real-time","vim","code share"],
 	openGraph: {
-		title: "AnimateIcons – Modern Animated React Icon Library",
-		description:
-			"Seamless, animated icons for React—make your interface stand out with beautifully smooth motion and easy customization. Built to help you create engaging experiences without the hassle.",
-		url: "https://animateicons.vercel.app",
-		siteName: "AnimateIcons",
-		images: [
-			{
-				url: ogImg.src,
-				width: ogImg.width,
-				height: ogImg.height,
-				alt: "AnimateIcons OG Banner",
-			},
-		],
+		title: "shitogether",
+		description: "--",
+		url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+		siteName: "Collaborative Buffer",
 		locale: "en_US",
 		type: "website",
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "AnimateIcons – Modern Animated React Icon Library",
-		description:
-			"Seamless, animated icons for React—make your interface stand out with beautifully smooth motion and easy customization. Built to help you create engaging experiences without the hassle.",
-		images: [
-			{
-				url: ogImg.src,
-				width: ogImg.width,
-				height: ogImg.height,
-				alt: "AnimateIcons OG Banner",
-			},
-		],
+		title: "Collaborative Buffer — Live, shareable text editor",
+		description: "Paste code, get a live shareable URL and edit collaboratively in real-time with optional Vim keybindings.",
 	},
 };
 
@@ -95,7 +48,6 @@ export default function RootLayout({
 				className={`${geistMono.variable} ${geistSans.variable} antialiased`}
 			>
 				{children}
-				<Analytics />
 			</body>
 		</html>
 	);
