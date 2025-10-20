@@ -1,10 +1,4 @@
 "use client";
-
-import React, { useEffect, useRef, useImperativeHandle } from "react";
-import Editor from "@monaco-editor/react";
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
-
 type CollabEditorProps = {
 	docId: string;
 	language?: string;
